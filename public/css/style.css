@@ -1,0 +1,92 @@
+/* Reset and Body Styling */
+body {
+  background-color: #111;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Logo Styling */
+.logo {
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image fits nicely within its container */
+  border-radius: 50%;
+  margin: 0 auto 20px; /* Center and add spacing below */
+  display: block; /* Ensure the image behaves as a block element */
+  animation: scaleUp 1.5s ease-out;
+}
+
+
+/* Signup Container Styling */
+.signup-container {
+  background-color: #222;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-out;
+}
+
+/* Logo Styling */
+.logo {
+  border-radius: 50%;
+  animation: scaleUp 1.5s ease-out;
+}
+
+/* Tagline Styling */
+.tagline {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+input {
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: #4CAF50 !important;
+  box-shadow: 0 0 5px #4CAF50 !important;
+}
+
+/* Button */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #45a049;
+}
+
+/* Footer Text */
+p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
