@@ -22,9 +22,11 @@
           <input type="text" name="lName" class="form-control "  placeholder="Last Name" required>
           
         </div>
-    
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Enter your email">
+          <!-- Updated Email Input with Validation -->
+          <input type="email" name="email" class="form-control" placeholder="Enter your email" required
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+            title="Please enter a valid email address (e.g., user@example.com)">
         </div>
         <button type="submit" class="btn btn-success w-100 py-2">Sign Me Up</button>
       </form>

@@ -18,6 +18,20 @@ app.post("/",function(req,res){
     var lastName = req.body.lName;
     var email = req.body.email; 
 
+
+    
+  // Regular expression for basic email validation
+  var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // Check if email matches the pattern
+  if (!email.match(emailPattern) || !email.endsWith('.com')) {
+    console.log("Invalid email format. Email must end with .com.");
+    res.sendFile(__dirname + "/failure.html"); // Return failure page if invalid email
+    return;
+}
+
+
+
     var data = {
         members:[
             {
@@ -32,12 +46,13 @@ app.post("/",function(req,res){
     };
 
     var jsonData = JSON.stringify(data);
+     console.log(data);
 
     var option ={
         url:"https://us14.api.mailchimp.com/3.0/lists/182dfa13f1",
         method:"POST",
         headers:{
-            "Authorization" : "Aniruddh 45722d60491adc3b8de3b8c85688351d-us14 "
+            "Authorization" : "Aniruddh fadfa6be3ef76da5efc8de2ead25c606-us14 "
         },
         body:jsonData
     };
@@ -74,5 +89,5 @@ app.listen(3000 || process.env.PORT,function() {
 });  
 
 
-// 45722d60491adc3b8de3b8c85688351d-us14
+// fadfa6be3ef76da5efc8de2ead25c606-us14
 //182dfa13f1.

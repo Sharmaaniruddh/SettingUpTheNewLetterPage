@@ -4,31 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #1d1d1d; font-family: Arial, sans-serif; color: white; text-align: center;">
+
+    <!-- Animated Success Icon -->
+    <div style="margin-top: 100px;">
+        <div style="
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            animation: scaleUp 1s ease-in-out forwards;
+            position: relative;">
+            <span style="
+                display: block;
+                width: 50px;
+                height: 25px;
+                border: solid white;
+                border-width: 0 0 8px 8px;
+                position: absolute;
+                left: 35px;
+                top: 35px;
+                transform: rotate(-45deg);
+                animation: checkmark 1s ease-out 1.5s forwards;">
+            </span>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <h1 style="margin-top: 40px; font-size: 2rem;">Success!</h1>
+    <p style="margin-top: 10px; font-size: 1.2rem; color: #ccc;">You have successfully subscribed to our service!</p>
+
+    <!-- Animated Button -->
+    <button style="
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: white;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        animation: fadeIn 1s ease-in-out 2s forwards;
+        transform: scale(1);"
+        onclick="window.location.href='/'">
+        Go Back
+    </button>
+
+    <!-- Keyframe Animations -->
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #1d1d1d;
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
+        @keyframes scaleUp {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: white;
-            background-color: #4caf50;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        @keyframes checkmark {
+            from {
+                transform: rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: rotate(-45deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
-</head>
-<body>
-    <h1>Success!</h1>
-    <p>You have successfully subscribed to our service!</p>
 
-    <button onclick="window.location.href='/'">Go Back</button>
 </body>
 </html>
