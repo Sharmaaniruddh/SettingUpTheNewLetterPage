@@ -1,93 +1,80 @@
-const express =require("express");
-const bodyParser =require("body-parser");
-const request =require("request");
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 const app = express();
 
 // Use body-parser to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serve static files
 app.use(express.static("public"));
 
-app.get("/",function(req,res){
-    res.sendFile(__dirname+"/signup.html")
-})
-
-app.post("/",function(req,res){
-    var firstName = req.body.fName;
-    var lastName = req.body.lName;
-    var email = req.body.email; 
-
-
-    
-  // Regular expression for basic email validation
-  var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  // Check if email matches the pattern
-  if (!email.match(emailPattern) || !email.endsWith('.com')) {
-    console.log("Invalid email format. Email must end with .com.");
-    res.sendFile(__dirname + "/failure.html"); // Return failure page if invalid email
-    return;
-}
-
-
-
-    var data = {
-        members:[
-            {
-                email_address:email,
-                status:"subscribed",
-                merge_fields:{
-                    FNAME:firstName,
-                    LNAME:lastName
-                }
-            }
-        ]
-    };
-
-    var jsonData = JSON.stringify(data);
-     console.log(data);
-
-    var option ={
-        url:"https://us14.api.mailchimp.com/3.0/lists/182dfa13f1",
-        method:"POST",
-        headers:{
-            "Authorization" : "Aniruddh fadfa6be3ef76da5efc8de2ead25c606-us14 "
-        },
-        body:jsonData
-    };
-
-    request(option,function(error,response,body){
-        if(error){
-            console.log("Error connecting to"+error);
-            res.sendFile(__dirname+"/failure.html");
-
-        }else{
-            if(response.statusCode===200){
-                res.sendFile(__dirname+"/success.html");
-            } else{
-                res.sendFile(__dirname+"/failure.html");
-
-            }
-            console.log(response.statusCode);
-        }
-    });
-
-    
-   
+// Route for the signup page
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/signup.html");
 });
 
+// Handle form submission
+app.post("/", (req, res) => {
+    const firstName = req.body.fName;
+    const lastName = req.body.lName;
+    const email = req.body.email;
 
-app.post("/failure",function(req,res){
+    // Email validation
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email.match(emailPattern) || !email.endsWith(".com")) {
+        console.log("Invalid email format. Email must end with .com.");
+        res.sendFile(__dirname + "/failure.html");
+        return;
+    }
+
+    // Mailchimp data payload
+    const data = {
+        members: [
+            {
+                email_address: email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: firstName,
+                    LNAME: lastName,
+                },
+            },
+        ],
+    };
+
+    // Mailchimp API request using axios
+    axios({
+        method: "POST",
+        url: `${process.env.MAILCHIMP_BASE_URL}/3.0/lists/${process.env.MAILCHIMP_LIST_ID}`,
+        headers: {
+            Authorization: `Bearer ${process.env.MAILCHIMP_API_KEY}`,
+            "Content-Type": "application/json",
+        },
+        data: data,
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                res.sendFile(__dirname + "/success.html");
+            } else {
+                res.sendFile(__dirname + "/failure.html");
+            }
+            console.log("Response Code:", response.status);
+        })
+        .catch((error) => {
+            console.log("Error connecting: " + error.message);
+            res.sendFile(__dirname + "/failure.html");
+        });
+});
+
+// Handle failure page "Try Again" button
+app.post("/failure", (req, res) => {
     res.redirect("/");
-})
+});
 
-
-
-app.listen(3000 || process.env.PORT,function() {
-    console.log("Server is running on port 3000");
-});  
-
-
-// fadfa6be3ef76da5efc8de2ead25c606-us14
-//182dfa13f1.
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
